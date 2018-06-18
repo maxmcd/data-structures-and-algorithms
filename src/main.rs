@@ -1,6 +1,9 @@
 extern crate rand;
+
+mod bubble;
 mod insertion;
 mod selection;
+
 use rand::Rng;
 use std::time::{Duration, Instant};
 
@@ -31,7 +34,7 @@ macro_rules! gen_tests {
             for i in 2..5 {
                 let dur = assert_eq(&mut random_array(10usize.pow(i)), &$lib::sort);
                 println!(
-                    "{} sort with {} numbers took {}.{} seconds",
+                    "{}\t {}\t took {}.{:#09} seconds",
                     $name,
                     10usize.pow(i),
                     dur.as_secs(),
@@ -48,5 +51,6 @@ mod tests {
 
     gen_tests!(insertion, "Insertion");
     gen_tests!(selection, "Selection");
+    gen_tests!(bubble, "Bubble\t");
 
 }
