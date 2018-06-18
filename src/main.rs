@@ -2,6 +2,7 @@ extern crate rand;
 
 mod bubble;
 mod insertion;
+mod merge;
 mod selection;
 
 use rand::Rng;
@@ -52,5 +53,6 @@ mod tests {
     gen_tests!(insertion, "Insertion");
     gen_tests!(selection, "Selection");
     gen_tests!(bubble, "Bubble\t");
+    gen_tests!(merge, "Merge\t");
 
 }
