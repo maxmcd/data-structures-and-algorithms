@@ -1,17 +1,22 @@
 extern crate rand;
 mod insertion;
+mod selection;
 use rand::Rng;
+use std::time::{Duration, Instant};
 
 fn main() {
     println!("hello");
 }
 
-fn assert_eq(list: &mut [u8], f: &Fn(&mut [u8])) {
+fn assert_eq(list: &mut [u8], f: &Fn(&mut [u8])) -> Duration {
     let mut dst = vec![0; list.len()];
     dst.copy_from_slice(list);
     dst.sort();
+    let now = Instant::now();
     f(list);
+    let took = now.elapsed();
     assert_eq!(list[..], dst[..]);
+    took
 }
 
 fn random_array(size: usize) -> Vec<u8> {
@@ -20,12 +25,19 @@ fn random_array(size: usize) -> Vec<u8> {
 }
 
 macro_rules! gen_tests {
-    ($lib:ident) => {
+    ($lib:ident, $name:tt) => {
         #[test]
         fn $lib() {
-            assert_eq(&mut random_array(1000), &$lib::sort);
-            assert_eq(&mut random_array(10), &$lib::sort);
-            assert_eq(&mut random_array(10000), &$lib::sort);
+            for i in 2..5 {
+                let dur = assert_eq(&mut random_array(10usize.pow(i)), &$lib::sort);
+                println!(
+                    "{} sort with {} numbers took {}.{} seconds",
+                    $name,
+                    10usize.pow(i),
+                    dur.as_secs(),
+                    dur.subsec_nanos()
+                );
+            }
         }
     };
 }
@@ -33,5 +45,8 @@ macro_rules! gen_tests {
 #[cfg(test)]
 mod tests {
     use super::*;
-    gen_tests!(insertion);
+
+    gen_tests!(insertion, "Insertion");
+    gen_tests!(selection, "Selection");
+
 }
