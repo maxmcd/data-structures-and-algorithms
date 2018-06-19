@@ -1,6 +1,7 @@
 extern crate rand;
 
 mod bubble;
+mod heap;
 mod insertion;
 mod merge;
 mod selection;
@@ -54,5 +55,6 @@ mod tests {
     gen_tests!(selection, "Selection");
     gen_tests!(bubble, "Bubble\t");
     gen_tests!(merge, "Merge\t");
+    gen_tests!(heap, "Heap\t");
 
 }
