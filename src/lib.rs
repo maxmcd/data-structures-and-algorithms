@@ -1,20 +1,16 @@
-extern crate rand;
 #[macro_use]
 extern crate proptest;
+extern crate rand;
 
-mod bubble;
-mod common;
-mod heap;
-mod insertion;
-mod merge;
-mod quick;
-mod selection;
+pub mod bubble;
+pub mod common;
+pub mod heap;
+pub mod insertion;
+pub mod merge;
+pub mod quick;
+pub mod selection;
 
 use std::time::{Duration, Instant};
-
-fn main() {
-    println!("hello");
-}
 
 fn assert_eq(list: &mut [u8], f: &Fn(&mut [u8])) -> Duration {
     let mut dst = vec![0; list.len()];
@@ -27,29 +23,29 @@ fn assert_eq(list: &mut [u8], f: &Fn(&mut [u8])) -> Duration {
     took
 }
 
-macro_rules! gen_test {
-    ($lib:ident, $name:tt) => {
-        #[test]
-        fn $lib() {
-            for i in 2..6 {
-                let dur = assert_eq(&mut common::random_array(10usize.pow(i)), &$lib::sort);
-                println!(
-                    "{}\t {}\t took {}.{:#09} seconds",
-                    $name,
-                    10usize.pow(i),
-                    dur.as_secs(),
-                    dur.subsec_nanos()
-                );
-            }
-        }
-    };
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
     use rand;
     use rand::Rng;
+
+    macro_rules! gen_test {
+        ($lib:ident, $name:tt) => {
+            #[test]
+            fn $lib() {
+                for i in 2..6 {
+                    let dur = assert_eq(&mut common::random_array(10usize.pow(i)), &$lib::sort);
+                    println!(
+                        "{}\t {}\t took {}.{:#09} seconds",
+                        $name,
+                        10usize.pow(i),
+                        dur.as_secs(),
+                        dur.subsec_nanos()
+                    );
+                }
+            }
+        };
+    }
 
     gen_test!(insertion, "Insertion");
     gen_test!(selection, "Selection");
