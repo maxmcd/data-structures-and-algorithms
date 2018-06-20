@@ -1,9 +1,8 @@
 #[macro_use]
 extern crate criterion;
+extern crate sorting;
 
 use criterion::Criterion;
-
-extern crate sorting;
 
 macro_rules! gen_test {
     ($lib:ident, $name:tt) => {
