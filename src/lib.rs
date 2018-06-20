@@ -10,38 +10,31 @@ pub mod merge;
 pub mod quick;
 pub mod selection;
 
-use std::time::{Duration, Instant};
-
-fn assert_eq(list: &mut [u8], f: &Fn(&mut [u8])) -> Duration {
-    let mut dst = vec![0; list.len()];
-    dst.copy_from_slice(list);
-    dst.sort();
-    let now = Instant::now();
-    f(list);
-    let took = now.elapsed();
-    assert_eq!(list[..], dst[..]);
-    took
-}
-
 #[cfg(test)]
 mod tests {
+
     use super::*;
     use rand;
     use rand::Rng;
+    use std::time::{Duration, Instant};
+
+    fn assert_eq(list: &mut [u8], f: &Fn(&mut [u8])) -> Duration {
+        let mut dst = vec![0; list.len()];
+        dst.copy_from_slice(list);
+        dst.sort();
+        let now = Instant::now();
+        f(list);
+        let took = now.elapsed();
+        assert_eq!(list[..], dst[..]);
+        took
+    }
 
     macro_rules! gen_test {
         ($lib:ident, $name:tt) => {
-            #[test]
-            fn $lib() {
-                for i in 2..6 {
-                    let dur = assert_eq(&mut common::random_array(10usize.pow(i)), &$lib::sort);
-                    println!(
-                        "{}\t {}\t took {}.{:#09} seconds",
-                        $name,
-                        10usize.pow(i),
-                        dur.as_secs(),
-                        dur.subsec_nanos()
-                    );
+            proptest! {
+                #[test]
+                fn $lib(a in 3..10000usize) {
+                    assert_eq(&mut common::random_array(a), &$lib::sort);
                 }
             }
         };
