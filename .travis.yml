@@ -5,3 +5,4 @@ script:
   - set -e
   - docker build -t sort .
   - docker run sort
+  - docker run sort cargo bench
