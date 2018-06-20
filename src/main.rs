@@ -48,6 +48,8 @@ macro_rules! gen_test {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use rand;
+    use rand::Rng;
 
     gen_test!(insertion, "Insertion");
     gen_test!(selection, "Selection");
@@ -55,5 +57,18 @@ mod tests {
     gen_test!(merge, "Merge\t");
     gen_test!(heap, "Heap\t");
     gen_test!(quick, "Quick\t");
+
+    proptest! {
+        #[test]
+        fn partial_sort(a in 10..100usize) {
+            let mut list = common::random_array(a);
+            let mut rng = rand::thread_rng();
+            let b = rng.gen_range(0, a);
+            quick::partial(&mut list, b);
+            let value = list[b];
+            list.sort();
+            assert_eq!(value, list[b]);
+        }
+    }
 
 }

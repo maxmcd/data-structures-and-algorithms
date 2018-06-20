@@ -7,6 +7,17 @@ pub fn sort(mut list: &mut [u8]) {
     sort(&mut list[pivot + 1..]);
 }
 
+pub fn partial(mut list: &mut [u8], k: usize) {
+    if list.len() <= 1 {
+        return;
+    }
+    let pivot = partition(&mut list);
+    partial(&mut list[0..pivot + 1], k);
+    if pivot < k {
+        partial(&mut list[pivot + 1..], k);
+    }
+}
+
 // "media-of-three" pivot strategy
 fn find_pivot(list: &mut [u8]) -> u8 {
     let hi = list.len() - 1;
