@@ -1,12 +1,15 @@
 extern crate rand;
+#[macro_use]
+extern crate proptest;
 
 mod bubble;
+mod common;
 mod heap;
 mod insertion;
 mod merge;
+mod quick;
 mod selection;
 
-use rand::Rng;
 use std::time::{Duration, Instant};
 
 fn main() {
@@ -24,17 +27,12 @@ fn assert_eq(list: &mut [u8], f: &Fn(&mut [u8])) -> Duration {
     took
 }
 
-fn random_array(size: usize) -> Vec<u8> {
-    let mut rng = rand::thread_rng();
-    (0..size).map(|_| rng.gen_range(0, 255)).collect()
-}
-
-macro_rules! gen_tests {
+macro_rules! gen_test {
     ($lib:ident, $name:tt) => {
         #[test]
         fn $lib() {
-            for i in 2..5 {
-                let dur = assert_eq(&mut random_array(10usize.pow(i)), &$lib::sort);
+            for i in 2..6 {
+                let dur = assert_eq(&mut common::random_array(10usize.pow(i)), &$lib::sort);
                 println!(
                     "{}\t {}\t took {}.{:#09} seconds",
                     $name,
@@ -51,10 +49,11 @@ macro_rules! gen_tests {
 mod tests {
     use super::*;
 
-    gen_tests!(insertion, "Insertion");
-    gen_tests!(selection, "Selection");
-    gen_tests!(bubble, "Bubble\t");
-    gen_tests!(merge, "Merge\t");
-    gen_tests!(heap, "Heap\t");
+    gen_test!(insertion, "Insertion");
+    gen_test!(selection, "Selection");
+    gen_test!(bubble, "Bubble\t");
+    gen_test!(merge, "Merge\t");
+    gen_test!(heap, "Heap\t");
+    gen_test!(quick, "Quick\t");
 
 }
