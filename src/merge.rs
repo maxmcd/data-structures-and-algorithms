@@ -41,3 +41,18 @@ fn min(x: usize, y: usize) -> usize {
         x
     }
 }
+
+mod tests {
+    use super::*;
+    // use common;
+
+    // #[test]
+    // fn merge_large() {
+    //     sort(&mut common::random_array(100_000_000));
+    // }
+
+    #[test]
+    fn run_merge() {
+        sort(&mut [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]);
+    }
+}

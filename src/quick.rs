@@ -55,26 +55,26 @@ fn partition(mut list: &mut [u8]) -> usize {
 }
 
 // mod tests {
-//     use common;
 //     use super::*;
+//     use common;
 
-//     #[test]
-//     fn quicksort() {
-//         sort(&mut common::random_array(10));
-//     }
+//     // #[test]
+//     // fn quicksort_large() {
+//     //     sort(&mut common::random_array(100_000_000));
+//     // }
 
-//     #[test]
-//     fn part() {
-//         partition(&mut [9, 9, 9, 1, 1, 1, 1]);
-//         partition(&mut [5, 8, 7, 5, 4, 4, 3, 2, 9]);
-//         partition(&mut [209, 97, 224, 26, 91, 5, 195, 251, 238, 30]);
-//     }
+//     // #[test]
+//     // fn part() {
+//     //     partition(&mut [9, 9, 9, 1, 1, 1, 1]);
+//     //     partition(&mut [5, 8, 7, 5, 4, 4, 3, 2, 9]);
+//     //     partition(&mut [209, 97, 224, 26, 91, 5, 195, 251, 238, 30]);
+//     // }
 
-//     proptest! {
-//         #[test]
-//         fn doesnt_crash(a in 10..11usize) {
-//             assert_accurate_partition(a);
-//         }
-//     }
+//     // proptest! {
+//     //     #[test]
+//     //     fn doesnt_crash(a in 10..11usize) {
+//     //         assert_accurate_partition(a);
+//     //     }
+//     // }
 
 // }
