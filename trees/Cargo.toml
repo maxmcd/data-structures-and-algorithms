@@ -1,0 +1,6 @@
+[package]
+name = "rbt"
+version = "0.1.0"
+authors = ["maxmcd <max.t.mcdonnell@gmail.com>"]
+
+[dependencies]
