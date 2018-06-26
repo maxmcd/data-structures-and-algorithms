@@ -1,0 +1,15 @@
+[package]
+name = "sorting"
+version = "0.1.0"
+authors = ["maxmcd <max.t.mcdonnell@gmail.com>"]
+
+[dependencies]
+rand = "0.5"
+
+[dev-dependencies]
+criterion = "0.2"
+proptest = "0.6.0"
+
+[[bench]]
+name = "sorting"
+harness = false
