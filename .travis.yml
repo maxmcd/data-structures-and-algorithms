@@ -1,8 +1,16 @@
 sudo: required
-services:
-  - docker
+cache:
+  ccache: true
+  directories:
+   - sorting/target
+   - trees/target
+   - $HOME/.cargo/git
+   - $HOME/.cargo/registry
 script:
   - set -e
-  - docker build -t sort .
-  - docker run sort
-  - docker run sort cargo bench
+  - curl -sSf https://sh.rustup.rs | sh -s -- -y
+  - export PATH=$HOME/.cargo/bin:$PATH
+  - rustc --version
+  - cd sorting; cargo test --release -- --nocapture
+  - cargo bench
+  - cd ../trees; cargo test --release -- --nocapture
