@@ -1,5 +1,5 @@
 [package]
-name = "rbt"
+name = "trees"
 version = "0.1.0"
 authors = ["maxmcd <max.t.mcdonnell@gmail.com>"]
 
